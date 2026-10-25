@@ -1,0 +1,6 @@
+@Ochakovo_HostAddress = http://localhost:5224
+
+GET {{Ochakovo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
