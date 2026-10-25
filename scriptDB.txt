@@ -1,0 +1,44 @@
+﻿CREATE TABLE Candidates
+(
+    CandidateId     int auto_increment primary key,
+    FullName        varchar(200)  not null,
+    Gender          ENUM ('м', 'ж', 'не указан')                         default 'не указан',
+    BirthDate       DATE          not null,
+    Phone           nvarchar(20)  not null,
+    Email           nvarchar(150) not null,
+    EducationType   ENUM ('вуз', 'колледж', 'другое'),
+    InstitutionName varchar(100)  not null,
+    WorkReadiness   ENUM ('готов', 'не готов', 'после учёбы', 'в течение месяца'),
+    Status          ENUM ('новый', 'в процессе', 'откликнулся', 'отказ') default 'новый'
+);
+
+CREATE TABLE Vacancies
+(
+    VacancyId   int auto_increment primary key,
+    Title       nvarchar(200)  not null,
+    Department  nvarchar(100)  not null,
+    Description text,
+    Requirement text,
+    Salary      decimal(10, 2) not null,
+    IsActive    bool default 1,
+    CHECK (Salary > 0)
+);
+
+CREATE TABLE CandidateVacancies
+(
+    Id          int auto_increment primary key,
+    CandidateId int not null,
+    VacancyId   int not null,
+    CreatedAt   datetime default now(),
+    FOREIGN KEY (CandidateId) references Candidates (CandidateId),
+    FOREIGN KEY (VacancyId) references Vacancies (VacancyId)
+);
+
+CREATE TABLE HR
+(
+    HrId     int auto_increment primary key,
+    FullName varchar(200)        not null,
+    Email    varchar(100) unique not null,
+    Phone    varchar(20) unique  not null,
+    Password varchar(500)        not null
+);
